@@ -23,7 +23,6 @@ const todoList = [
   'Infinity Perk',
   'Overall bonus for current tree setup',
   'Efficiency of individual perk in the setup',
-  'Unique url for each tree setup',
   'Validating tree setup',
   'Pinch to zoom tree',
   '...',

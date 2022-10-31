@@ -32,9 +32,9 @@ export const PERK_50 = [
   // SE16
   { pick: ['W2'], drop: [] },
   // SE17
-  { pick: ['W5', 'Bu1', 'Bu2', 'Bu3'], drop: ['R3', 'P2', 'W4'] },
+  { pick: ['W5', 'Bu1', 'Bu2', 'Bu3'], drop: ['R3', 'P1', 'P2'] },
   // SE18
-  { pick: ['W4'], drop: [] },
+  { pick: ['P1'], drop: [] },
   // SE19
   { pick: ['R3'], drop: [] },
   // SE20

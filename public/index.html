@@ -25,5 +25,21 @@
       id="phaser-container"
       style="overflow: hidden; width: 100%; height: calc(100% - 56px)"
     ></div>
+    <% if (process.env.NODE_ENV === 'production') { %>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-3KVSJ2S79L"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-3KVSJ2S79L')
+    </script>
+    <% } %>
   </body>
 </html>

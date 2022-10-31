@@ -1,3 +1,4 @@
+import React from 'react'
 import { Box, Button, Modal, Stack, Typography } from '@mui/material'
 
 const style = {

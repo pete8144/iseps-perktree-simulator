@@ -1,3 +1,4 @@
+import React from 'react'
 import { Box, Link, Modal, Stack, Typography } from '@mui/material'
 
 import { GitHub } from '@mui/icons-material'

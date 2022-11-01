@@ -13,5 +13,5 @@ export const getSeDcPercentBonus = (perks: string[]) => {
     (1 + (hasW3 ? 0.5 : 0) + (hasW6 ? 0.75 : 0) + (hasW8 ? 0.25 : 0)) *
     (1 + (hasW9 ? se / 100 : 0))
 
-  return (bonus - 1) * 100
+  return bonus * 100
 }

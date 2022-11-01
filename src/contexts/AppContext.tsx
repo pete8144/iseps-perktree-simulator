@@ -1,4 +1,10 @@
-import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import AboutModal from '../components/modal/AboutModal'
 
 import GuideModal from '../components/modal/GuideModal'

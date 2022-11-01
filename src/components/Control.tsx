@@ -1,13 +1,28 @@
-import { Box, Button, Stack, Typography } from '@mui/material'
+import React, {
+  Alert,
+  Box,
+  Button,
+  Snackbar,
+  Stack,
+  Typography,
+} from '@mui/material'
 import SubjectIcon from '@mui/icons-material/Subject'
+import ReportProblemIcon from '@mui/icons-material/ReportProblem'
 
 import { useAppContext } from '../hooks/useAppContext'
 
 import Zoom from './controls/Zoom'
+import { useMemo } from 'react'
+import { validateTree } from '../utils/perk'
 
 const Control = () => {
   const { perkState, showGuideModal, showBonusModal, showNoteModal } =
     useAppContext()
+
+  const invalidTreeMessage = useMemo(
+    () => validateTree(perkState.perks),
+    [perkState.perks],
+  )
 
   return (
     <Box
@@ -29,10 +44,31 @@ const Control = () => {
         }}
       />
       <Typography
-        sx={{ position: 'absolute', top: '0', right: '0', p: '6px 8px' }}
+        sx={{
+          position: 'absolute',
+          top: '0',
+          right: '0',
+          p: '6px 8px',
+          color: invalidTreeMessage ? 'error.dark' : null,
+        }}
       >
+        {invalidTreeMessage != null && (
+          <ReportProblemIcon
+            sx={{ fontSize: '16px', verticalAlign: 'middle', mr: 1 }}
+          />
+        )}
         SE{perkState.perkCount}
       </Typography>
+
+      {invalidTreeMessage != null && (
+        <Snackbar open={true} autoHideDuration={2000} sx={{ width: '100%' }}>
+          <Alert severity="error" sx={{ maxWidth: '70%' }}>
+            <b>Invalid Setup:</b>
+            <br />
+            {invalidTreeMessage}
+          </Alert>
+        </Snackbar>
+      )}
 
       <Stack
         gap={1}

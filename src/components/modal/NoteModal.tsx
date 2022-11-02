@@ -21,26 +21,6 @@ type Props = {
   onClose: () => any
 }
 
-const AdjustButton = ({
-  value,
-  onClick,
-}: {
-  value: string
-  onClick: () => any
-}) => (
-  <Button
-    size="small"
-    variant="outlined"
-    sx={{
-      minWidth: '0',
-      mx: 1,
-    }}
-    onClick={onClick}
-  >
-    {value}
-  </Button>
-)
-
 export default function NoteModal({ isVisible, onClose }: Props) {
   const { perkState } = useAppContext()
   const se = perkState.perkCount

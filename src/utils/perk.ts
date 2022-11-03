@@ -67,27 +67,34 @@ export const validateTree = (perks: string[]): string | null => {
   const wlCount = perks.filter((p) => /^[WL]\d+$/.test(p)).length
   const poCount = perks.filter((p) => /^[PO]\d+$/.test(p)).length
   const gCount = perks.filter((p) => /^G\d+$/.test(p)).length
+  const ipCount = perks.filter((p) => p === 'IP').length
 
   if (wlCount > 0 && se <= 2) {
-    return 'cannot select White or Lime perks before SE3'
+    return "You mustn't select White or Lime perks before SE3"
   }
 
   if (se >= 3 && rbyCount < 2) {
-    return 'needs ' + morePerksText(2 - rbyCount) + ' from R/B/Y paths'
+    return 'You needs ' + morePerksText(2 - rbyCount) + ' from R/B/Y paths'
   }
 
   if (poCount > 0 && se < 5) {
-    return 'cannot select Purple or Orange perks before SE5'
+    return "You mustn't select Purple or Orange perks before SE5"
   }
 
   if (poCount > 0 && se >= 5 && rbyCount + wlCount < 4) {
     return (
-      'needs ' + morePerksText(4 - rbyCount - wlCount) + ' from R/B/Y/W/L paths'
+      'You needs ' +
+      morePerksText(4 - rbyCount - wlCount) +
+      ' from R/B/Y/W/L paths'
     )
   }
 
   if (gCount > 0 && se < 8) {
-    return 'cannot select Green perks before SE8'
+    return "You mustn't select Green perks before SE8"
+  }
+
+  if (ipCount > 0 && se - ipCount < 50) {
+    return 'You must have at least 50 normal perks before purchasing an IP'
   }
 
   return null

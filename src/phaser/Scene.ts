@@ -5,12 +5,15 @@ import { getSeDcPercentBonus } from '../utils/bonus/perk-white'
 import { formatPercent } from '../utils/formatter'
 import { getRecommendedPerks } from '../utils/perk'
 import { Perk } from './object/Perk'
+import { InfinityPerk } from './object/PerkInfinity'
 
 export default class Scene extends Phaser.Scene {
   // @ts-ignore
   dcBonusText: Phaser.GameObjects.Text
   perkMap: { [key: string]: Perk } = {}
   perkList: Perk[] = []
+  // @ts-ignore
+  infinityPerk: InfinityPerk
   isUsingGuide = false
   showingFullMap = false
 
@@ -27,7 +30,9 @@ export default class Scene extends Phaser.Scene {
       this.perkList.push(perk)
     })
 
-    this.perkList.forEach((perk) => {
+    // @ts-ignore
+    this.infinityPerk = this.add.infinityperk()
+    ;[...this.perkList, this.infinityPerk].forEach((perk) => {
       perk.createNode()
       perk.refreshState()
     })
@@ -91,10 +96,12 @@ export default class Scene extends Phaser.Scene {
       .filter((p) => p.isActivated)
       .map((p) => p.code)
 
+    activatedPerks.push(...Array(this.infinityPerk.level).fill('IP'))
+
     const dcBonus = activatedPerks.length
       ? formatPercent(getSeDcPercentBonus(activatedPerks)) + ' DC'
       : ''
-    this.dcBonusText.setText(dcBonus).setFontSize(dcBonus.length > 10 ? 25 : 35)
+    this.dcBonusText.setText(dcBonus).setFontSize(dcBonus.length > 8 ? 25 : 35)
 
     this.game.events.emit('updatePerkState', {
       perks: activatedPerks,
@@ -130,6 +137,8 @@ export default class Scene extends Phaser.Scene {
     this.isUsingGuide = false
     if (reset) this.perkList.forEach((p) => p.deactivate())
     perks.forEach((perk) => this.perkMap[perk]?.activate())
+    const ipCount = perks.filter((p) => p === 'IP').length
+    if (ipCount) this.infinityPerk.activate(ipCount)
     this.updateSummary()
   }
 

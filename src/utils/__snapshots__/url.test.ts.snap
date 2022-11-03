@@ -48,3 +48,20 @@ Array [
   "W4",
 ]
 `;
+
+exports[`decode perks 3`] = `
+Array [
+  "W1",
+  "W3",
+  "W6",
+  "W8",
+  "W9",
+  "W10",
+  "IP",
+  "IP",
+  "IP",
+  "IP",
+  "IP",
+  "IP",
+]
+`;

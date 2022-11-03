@@ -20,6 +20,40 @@ export const getRecommendedPerks = (
   return { ...result, perks: Array.from(result.perks) }
 }
 
+export const countPerks = (perks: []) => {
+  const count = (type: string) =>
+    perks.filter((p) => new RegExp(`^${type}\d+$`).test(p)).length
+
+  const result = {
+    total: perks.length,
+    redRaw: count('R'),
+    blueRaw: count('B'),
+    yellowRaw: count('Y'),
+    limeRaw: count('L'),
+    purpleRaw: count('P'),
+    orangeRaw: count('O'),
+    greenRaw: count('G'),
+    whiteRaw: count('W'),
+    burgundyRaw: count('Bu'),
+    tealRaw: count('T'),
+    infinity: perks.filter((p) => p === 'IP').length,
+  }
+
+  return {
+    ...result,
+    red: result.redRaw + result.infinity,
+    blue: result.blueRaw + result.infinity,
+    yellow: result.yellowRaw + result.infinity,
+    lime: result.limeRaw + result.infinity,
+    purple: result.purpleRaw + result.infinity,
+    orange: result.orangeRaw + result.infinity,
+    green: result.greenRaw + result.infinity,
+    white: result.whiteRaw + result.infinity,
+    burgundy: result.burgundyRaw + result.infinity,
+    tealRaw: count('T'),
+  }
+}
+
 export const validateTree = (perks: string[]): string | null => {
   const se = perks.length
   // W + L at se3

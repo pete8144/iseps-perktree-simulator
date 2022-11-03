@@ -64,4 +64,5 @@ test('encode perks', () => {
 test('decode perks', () => {
   expect(url.decodePerks('RBY')).toMatchSnapshot()
   expect(url.decodePerks('R1-5B1,3P1,3-6Bu1-3W1,3,4')).toMatchSnapshot()
+  expect(url.decodePerks('W1,3,6,8-10Ip6')).toMatchSnapshot()
 })

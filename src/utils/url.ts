@@ -65,21 +65,29 @@ const decodeColorPerks = (type?: string, index?: string): string[] => {
 export const decodePerks = (code: string): string[] => {
   const matches = code.match(/([A-Z][^A-Z]*)/g)
 
-  if (matches) {
-    return matches.reduce((acc: string[], match) => {
-      const ret = /(?<perkType>[a-z]+)(?<index>.*)/gi.exec(match)
-      if (ret) {
-        return [
-          ...acc,
-          ...decodeColorPerks(ret.groups?.perkType, ret.groups?.index),
-        ]
-      }
+  if (!matches) return []
 
-      return acc
-    }, [])
+  const ret = matches.reduce((acc: string[], match) => {
+    const ret = /(?<perkType>[a-z]+)(?<index>.*)/gi.exec(match)
+    if (ret) {
+      return [
+        ...acc,
+        ...decodeColorPerks(ret.groups?.perkType, ret.groups?.index),
+      ]
+    }
+
+    return acc
+  }, [])
+
+  const ip = /Ip(?<count>\d+)/.exec(code)
+  if (ip?.groups?.count) {
+    const ipCount = parseInt(ip.groups.count, 10)
+    if (Number.isInteger(ipCount) && ipCount > 0 && ipCount <= 40) {
+      ret.push(...Array(ipCount).fill('IP'))
+    }
   }
 
-  return []
+  return ret
 }
 
 export const encodePerks = (perks: string[]): string => {
@@ -140,6 +148,9 @@ export const encodePerks = (perks: string[]): string => {
           .join(','),
     )
   })
+
+  const ipCount = perks.filter((p) => p === 'IP').length
+  if (ipCount) ret.push('Ip' + ipCount)
 
   return ret.join('')
 }

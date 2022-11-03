@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import { PerkPlugin } from './object/Perk'
+import { PerkInfinityPlugin } from './object/PerkInfinity'
 
 import Scene from './Scene'
 
@@ -15,7 +16,10 @@ const config: Phaser.Types.Core.GameConfig = {
   },
   scene: [Scene],
   plugins: {
-    global: [{ key: 'PerkPlugin', plugin: PerkPlugin, start: true }],
+    global: [
+      { key: 'PerkPlugin', plugin: PerkPlugin, start: true },
+      { key: 'InfinityPerkPlugin', plugin: PerkInfinityPlugin, start: true },
+    ],
   },
 }
 

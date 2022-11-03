@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import { PerkConfig, PERK_COLOR } from '../../constants'
+import { InfinityPerk } from './PerkInfinity'
 
 const INACTIVE_COLOR = 0x000000
 const NODE_BG_COLOR = 0x585858
@@ -15,7 +16,7 @@ export class Perk extends Phaser.GameObjects.Container {
   distanceMultiplier?: number
   name: string
   parentPerks: Perk[] = []
-  childrenPerks: Perk[] = []
+  childrenPerks: Array<Perk | InfinityPerk> = []
   direction: number
   isActivated = false
 

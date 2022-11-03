@@ -20,7 +20,8 @@ type Props = {
 }
 
 const todoList = [
-  'Infinity Perk',
+  'Recommended Perk Build for SE50+',
+  'Alternative Recommended Perk Build',
   'Overall bonus for current tree setup',
   'Efficiency of individual perk in the setup',
   'Pinch to zoom tree',

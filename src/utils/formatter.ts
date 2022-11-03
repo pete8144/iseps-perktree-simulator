@@ -11,9 +11,6 @@ export const formatNumber = (value: number) => {
   if (v >= 1e6) {
     v /= 1e6
     suffix = 'm'
-  } else if (v >= 1e3) {
-    v /= 1e3
-    suffix = 'k'
   }
 
   return formatDecimal(v) + suffix

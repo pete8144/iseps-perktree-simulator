@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/iseps-perktree-simulator/static/css/main.709d0859.css",
-    "main.js": "/iseps-perktree-simulator/static/js/main.131d3882.js",
+    "main.js": "/iseps-perktree-simulator/static/js/main.cd9a64dc.js",
     "index.html": "/iseps-perktree-simulator/index.html",
     "main.709d0859.css.map": "/iseps-perktree-simulator/static/css/main.709d0859.css.map",
-    "main.131d3882.js.map": "/iseps-perktree-simulator/static/js/main.131d3882.js.map"
+    "main.cd9a64dc.js.map": "/iseps-perktree-simulator/static/js/main.cd9a64dc.js.map"
   },
   "entrypoints": [
     "static/css/main.709d0859.css",
-    "static/js/main.131d3882.js"
+    "static/js/main.cd9a64dc.js"
   ]
 }

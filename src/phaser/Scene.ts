@@ -37,8 +37,11 @@ export default class Scene extends Phaser.Scene {
       perk.refreshState()
     })
 
-    this.add.circle(0, 0, 100, 0x000000)
-    this.add.circle(0, 0, 90, 0x444444)
+    // @ts-ignore
+    this.add.circle(0, 0, window.exportMode ? 50 : 100, 0x000000)
+    // @ts-ignore
+    this.add.circle(0, 0, window.exportMode ? 40 : 90, 0x444444)
+
     this.dcBonusText = this.add
       .text(0, 0, '', {
         fontFamily:
@@ -151,8 +154,36 @@ export default class Scene extends Phaser.Scene {
   selectPerkGuide(se: number) {
     this.isUsingGuide = true
     this.perkList.forEach((p) => p.deactivate())
-    const { perks } = getRecommendedPerks(se)
+    const { perks, pick, drop } = getRecommendedPerks(se)
     perks.forEach((perk) => this.perkMap[perk]?.activate())
     this.updateSummary()
+    // @ts-ignore
+    if (window.exportMode) {
+      pick.forEach((perk) => this.perkMap[perk]?.showPickStatus())
+      drop.forEach((perk) => this.perkMap[perk]?.showDropStatus())
+      this.dcBonusText.text = 'SE' + se
+    }
+  }
+
+  getAcquiredPerksBoundary() {
+    const frame = { t: -50, b: 50, l: -50, r: 50 }
+
+    const OFFSET = 20
+
+    this.perkList
+      .filter((p) => p.isActivated || p.isDropped)
+      .forEach((perk) => {
+        frame.t = Math.min(frame.t, perk.nodeY / 2 - OFFSET)
+        frame.b = Math.max(frame.b, perk.nodeY / 2 + OFFSET)
+        frame.l = Math.min(frame.l, perk.nodeX / 2 - OFFSET)
+        frame.r = Math.max(frame.r, perk.nodeX / 2 + OFFSET)
+      })
+
+    return {
+      x: frame.l,
+      y: frame.t,
+      width: frame.r - frame.l,
+      height: frame.b - frame.t,
+    }
   }
 }

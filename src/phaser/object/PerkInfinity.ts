@@ -83,6 +83,11 @@ export class InfinityPerk extends Phaser.GameObjects.Container {
   }
 
   createButtons() {
+    // @ts-ignore
+    if (window.exportMode) {
+      return
+    }
+
     const OFFSET = 110
 
     const createButton = (text: string, offsetY: number) => {

@@ -6,8 +6,8 @@ const INACTIVE_COLOR = 0x000000
 const NODE_BG_COLOR = 0x585858
 const NODE_FONT_COLOR = '#ffffff'
 const NODE_RADIUS = 40
-const NODE_DISTANCE = 130
-const NODE_DISTANCE_FROM_CENTER = 200
+const NODE_DISTANCE = 120
+const NODE_DISTANCE_FROM_CENTER = 160
 
 export class Perk extends Phaser.GameObjects.Container {
   code: string
@@ -19,14 +19,20 @@ export class Perk extends Phaser.GameObjects.Container {
   childrenPerks: Array<Perk | InfinityPerk> = []
   direction: number
   isActivated = false
+  isPicked = false
+  isDropped = false
 
   nodeX: number = 0
   nodeY: number = 0
 
   // @ts-ignore
-  nodeObject: Phaser.GameObjects.Shape
+  nodeObject: Phaser.GameObjects.Arc
+  // @ts-ignore
+  innerNodeObject: Phaser.GameObjects.Arc
   // @ts-ignore
   pathObjects: Phaser.GameObjects.Line[]
+  // @ts-ignore
+  textObject: Phaser.GameObjects.Text
 
   constructor(scene: Phaser.Scene, config: PerkConfig) {
     super(scene)
@@ -93,13 +99,13 @@ export class Perk extends Phaser.GameObjects.Container {
       .circle(this.nodeX, this.nodeY, NODE_RADIUS, INACTIVE_COLOR)
       .setInteractive({ useHandCursor: true })
     this.nodeObject.on('pointerup', this.onPointerUp, this)
-    this.scene.add.circle(
+    this.innerNodeObject = this.scene.add.circle(
       this.nodeX,
       this.nodeY,
       NODE_RADIUS - 10,
       NODE_BG_COLOR,
     )
-    this.scene.add
+    this.textObject = this.scene.add
       .text(this.nodeX, this.nodeY, this.code, {
         color: NODE_FONT_COLOR,
         fontFamily:
@@ -110,6 +116,11 @@ export class Perk extends Phaser.GameObjects.Container {
   }
 
   refreshState() {
+    this.nodeObject.setRadius(NODE_RADIUS)
+    this.innerNodeObject.visible = true
+    this.textObject.text = this.code
+    this.textObject.setColor(NODE_FONT_COLOR)
+    this.textObject.setStyle({ fontWeight: 'normal', align: 'center' })
     this.pathObjects.forEach((pathObject) => {
       pathObject.strokeColor = this.isActivated ? this.color : INACTIVE_COLOR
     })
@@ -124,15 +135,37 @@ export class Perk extends Phaser.GameObjects.Container {
   }
 
   activate() {
+    this.isPicked = false
+    this.isDropped = false
     this.isActivated = true
     this.parentPerks.forEach((p) => p.activate())
     this.refreshState()
   }
 
   deactivate() {
+    this.isPicked = false
+    this.isDropped = false
     this.isActivated = false
     this.childrenPerks.forEach((p) => p.deactivate())
     this.refreshState()
+  }
+
+  showPickStatus() {
+    this.isPicked = true
+    this.nodeObject.setRadius(NODE_RADIUS + 10)
+    this.innerNodeObject.visible = false
+    this.textObject.text = 'TAKE\n' + this.code
+    this.textObject.setStyle({ fontWeight: 'bold' })
+    this.textObject.setColor(/^[WL]/.test(this.code) ? '#585858' : '#FFFFFF')
+  }
+
+  showDropStatus() {
+    this.isDropped = true
+    this.nodeObject.setRadius(NODE_RADIUS + 10)
+    this.innerNodeObject.visible = false
+    this.textObject.text = 'DROP\n' + this.code
+    this.textObject.setStyle({ fontWeight: 'bold' })
+    this.textObject.setColor('#FFFFFF')
   }
 }
 

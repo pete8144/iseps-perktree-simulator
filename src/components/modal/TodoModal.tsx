@@ -20,6 +20,7 @@ type Props = {
 }
 
 const todoList = [
+  'Perk Build url generator for sharing',
   'Recommended Perk Build for SE50+',
   'Alternative Recommended Perk Build',
   'Overall bonus for current tree setup',
